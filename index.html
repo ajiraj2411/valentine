@@ -288,28 +288,40 @@ function unlock() {
 /* 📅 PROD LOGIC */
 function showInitialDay() {
   const d = new Date();
-  const isFeb = d.getMonth() === 1;
+  const month = d.getMonth(); // Jan = 0, Feb = 1
   const today = d.getDate();
 
+  // 🧪 Test mode → everything
   if (TEST_MODE) {
     showDay(0);
     return;
   }
 
-  if (!isFeb) {
-    showDay(0); // New Year only
+  // 🎆 Jan 1 → Feb 6 → only New Year
+  if (month === 0 || (month === 1 && today < 7)) {
+    showDay(0);
     return;
   }
 
-  // Feb 7 is Rose Day → index 1
-  let maxIndex = today - 6;
-
-  if (today >= 14) {
-    maxIndex = dayCards.length - 1;
+  // 🌹 Feb 7 → Feb 13 → start from today's page
+  if (month === 1 && today >= 7 && today <= 13) {
+    showDay(today - 6); // Feb 7 → index 1
+    return;
   }
 
-  activeIndex = Math.max(0, Math.min(maxIndex, dayCards.length - 1));
-  showDay(activeIndex);
+  // ❤️ Feb 14 → show Valentine
+  if (month === 1 && today === 14) {
+    showDay(8);
+    return;
+  }
+
+  // 🌸 Feb 15+ → relive from Rose Day
+  if (month === 1 && today > 14) {
+    showDay(1); // Rose Day
+    return;
+  }
+
+  showDay(0);
 }
 
 /* 📖 SHOW DAY */
@@ -322,11 +334,25 @@ function showDay(i) {
 /* ⬅️➡️ NAV */
 function next() {
   const d = new Date();
-  if (!TEST_MODE && d.getMonth() === 1 && d.getDate() < 14) {
-    const maxIndex = d.getDate() - 6;
-    if (activeIndex >= maxIndex) return;
+  const month = d.getMonth();
+  const today = d.getDate();
+
+  // 🧪 Test mode → free navigation
+  if (TEST_MODE) {
+    if (activeIndex < dayCards.length - 1) showDay(activeIndex + 1);
+    return;
   }
 
+  // 🎆 Jan or before Feb 7 → lock
+  if (month === 0 || (month === 1 && today < 7)) return;
+
+  // 🌹 Feb 7–13 → lock future
+  if (month === 1 && today >= 7 && today < 14) {
+    const maxIndex = today - 6;
+    if (activeIndex + 1 > maxIndex) return;
+  }
+
+  // ❤️ Feb 14+ → full access
   if (activeIndex < dayCards.length - 1) {
     showDay(activeIndex + 1);
   }
