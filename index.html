@@ -26,9 +26,7 @@ body {
   font-family: 'Segoe UI', sans-serif;
 }
 
-:root {
-  --frame-ratio: 4 / 5;
-}
+:root { --frame-ratio: 4 / 5; }
 
 /* ================= LOCK SCREEN ================= */
 #lockScreen {
@@ -38,8 +36,6 @@ body {
   display: grid;
   place-items: center;
   z-index: 5000;
-  padding: env(safe-area-inset-top) env(safe-area-inset-right)
-           env(safe-area-inset-bottom) env(safe-area-inset-left);
 }
 
 .lock-box {
@@ -49,12 +45,6 @@ body {
   background: rgba(255,255,255,0.07);
   box-shadow: 0 25px 60px rgba(0,0,0,0.65);
   text-align: center;
-  animation: popIn 0.6s ease-out;
-}
-
-@keyframes popIn {
-  from { transform: scale(0.9); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
 }
 
 input {
@@ -96,37 +86,23 @@ button:hover { background: #ff1744; }
   animation: fadeIn 2s forwards;
 }
 
-@keyframes fadeIn {
-  to { opacity: 1; }
-}
+@keyframes fadeIn { to { opacity: 1; } }
 
-/* ================= APP FRAME ================= */
+/* ================= APP ================= */
 #app {
   width: min(92vw, 420px);
   height: min(92svh, 720px);
-  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-/* ================= TEST LABEL ================= */
-#testLabel {
-  position: fixed;
-  top: calc(env(safe-area-inset-top) + 8px);
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 0.75rem;
-  opacity: 0.6;
-}
-
-/* ================= DAY CARD ================= */
+/* ================= DAY ================= */
 .day {
   width: 100%;
   height: 100%;
   background: rgba(255,255,255,0.08);
   border-radius: 22px;
-  box-shadow: 0 0 25px rgba(255,0,80,0.3);
   padding: 20px;
   display: none;
   flex-direction: column;
@@ -135,19 +111,14 @@ button:hover { background: #ff1744; }
 }
 
 .day.active { display: flex; }
-
 .day.dimmed { opacity: 0.55; }
 
-h2 { margin-bottom: 12px; }
-
-/* ================= PHOTO FRAME FIX ================= */
+/* ================= PHOTO ================= */
 .photo {
   width: 100%;
   aspect-ratio: var(--frame-ratio);
   overflow: hidden;
   border-radius: 18px;
-  position: relative;
-  background: #000;
   margin-bottom: 14px;
 }
 
@@ -155,7 +126,6 @@ h2 { margin-bottom: 12px; }
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center;
   animation: kenburns 18s ease-in-out infinite;
 }
 
@@ -163,25 +133,6 @@ h2 { margin-bottom: 12px; }
   from { transform: scale(1); }
   to { transform: scale(1.15); }
 }
-
-.photo::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse at center,
-    rgba(0,0,0,0) 60%,
-    rgba(0,0,0,0.35) 100%);
-}
-
-/* ================= TEXT ================= */
-.note {
-  font-family: 'Pacifico', cursive;
-  font-size: 1.05rem;
-  line-height: 1.5;
-}
-
-/* ================= NAV ================= */
-.dot.active { background: white; }
 
 /* ================= POPUP ================= */
 .popup {
@@ -202,23 +153,12 @@ h2 { margin-bottom: 12px; }
   text-align: center;
   font-family: 'Pacifico', cursive;
 }
-
-/* ================= CONFETTI ================= */
-.confetti {
-  position: fixed;
-  top: -10px;
-  font-size: 18px;
-  animation: fall linear forwards;
-}
-
-@keyframes fall {
-  to { transform: translateY(110vh); opacity: 0; }
-}
 </style>
 </head>
 
 <body>
 
+<!-- 🔐 LOCK -->
 <div id="lockScreen">
   <div class="lock-box">
     <h2>For Rohini ❤️</h2>
@@ -227,6 +167,7 @@ h2 { margin-bottom: 12px; }
   </div>
 </div>
 
+<!-- 🎬 INTRO -->
 <div id="intro">
   <div>
     <h1 class="fade">Every love story is beautiful…</h1>
@@ -234,31 +175,9 @@ h2 { margin-bottom: 12px; }
   </div>
 </div>
 
-<div id="testLabel">🧪 Unlocked earlier days (test mode)</div>
-
+<!-- 📖 STORY -->
 <div id="app">
 
-<!-- 🌹 Rose Day -->
-<div class="day">
-  <h2>🌹 Rose Day</h2>
-  <div class="photo"><img src="rose.jpg"></div>
-  <p class="note">
-    Our love bloomed beautifully 🌹<br>
-    நம்ம காதல் ஒரு அழகான மலராக மலர்ந்த நாள்
-  </p>
-</div>
-
-<!-- 💍 Propose Day -->
-<div class="day">
-  <h2>💍 Propose Day</h2>
-  <div class="photo"><img src="propose.jpg"></div>
-  <p class="note">
-    I promised you my forever 💍<br>
-    என் வாழ்கையின் எல்லா நாள்களும் உன்னோடே
-  </p>
-</div>
-
-<!-- 🍫 Chocolate Day -->
 <div class="day">
   <h2>🍫 Chocolate Day</h2>
   <div class="photo"><img src="chocolate.jpg"></div>
@@ -268,47 +187,6 @@ h2 { margin-bottom: 12px; }
   </p>
 </div>
 
-<!-- 🧸 Teddy Day -->
-<div class="day">
-  <h2>🧸 Teddy Day</h2>
-  <div class="photo"><img src="teddy.jpg"></div>
-  <p class="note">
-    Everything feels cute with you 🧸<br>
-    நீ இருக்கும்போது எல்லாமே அழகா இருக்குது
-  </p>
-</div>
-
-<!-- 🤞 Promise Day -->
-<div class="day">
-  <h2>🤞 Promise Day</h2>
-  <div class="photo"><img src="promise.jpg"></div>
-  <p class="note">
-    Forever by your side 🤞<br>
-    எப்போதும் உன் பக்கம் நின்று கொண்டே இருப்பேன்
-  </p>
-</div>
-
-<!-- 🤗 Hug Day -->
-<div class="day">
-  <h2>🤗 Hug Day</h2>
-  <div class="photo"><img src="hug.jpg"></div>
-  <p class="note">
-    Your hug feels like home 🤍<br>
-    உன் அணைப்பு தான் என் வீடு
-  </p>
-</div>
-
-<!-- 😘 Kiss Day -->
-<div class="day">
-  <h2>😘 Kiss Day</h2>
-  <div class="photo"><img src="kiss.jpg"></div>
-  <p class="note">
-    Some feelings need no words 😘<br>
-    சில உணர்வுகளுக்கு வார்த்தைகள் தேவையில்லை
-  </p>
-</div>
-
-<!-- ❤️ Valentine’s Day -->
 <div class="day">
   <h2>❤️ Valentine’s Day</h2>
   <div class="photo"><img src="valentine.jpg"></div>
@@ -321,6 +199,15 @@ h2 { margin-bottom: 12px; }
 
 </div>
 
+<!-- 💌 LOVE POPUP -->
+<div class="popup" id="lovePopup">
+  <div class="popup-content">
+    <h2>My Rohini 💌</h2>
+    <p id="loveText"></p>
+    <button onclick="closeLove()">Close ❤️</button>
+  </div>
+</div>
+
 <audio id="bgMusic" loop>
   <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3">
 </audio>
@@ -329,125 +216,83 @@ h2 { margin-bottom: 12px; }
 /* ================= CONFIG ================= */
 const TEST_MODE = true;
 const allowedPasswords = ['rohini', 'kannamma'];
-const DAYS = [7, 8, 9, 10, 11, 12, 13, 14];
+
+const dayCards = document.querySelectorAll('.day');
+let activeIndex = 0;
 
 /* ================= UNLOCK ================= */
 function unlock() {
   const v = password.value.trim().toLowerCase();
-  if (!allowedPasswords.includes(v)) {
-    alert('Wrong password 💔');
-    return;
-  }
+  if (!allowedPasswords.includes(v)) return alert('Wrong password 💔');
 
   lockScreen.style.display = 'none';
   intro.style.display = 'grid';
   bgMusic.play();
 
   setTimeout(() => intro.style.display = 'none', 6000);
-
-  initDays();
+  showDay(0);
 }
 
-/* ================= DAY LOGIC ================= */
-const dayCards = Array.from(document.querySelectorAll('.day'));
-let activeIndex = 0;
-
-function initDays() {
-  const now = new Date();
-  const today = now.getDate();
-  const isFebruary = now.getMonth() === 1;
-
-  // Reset
-  dayCards.forEach(card => {
-    card.classList.remove('active', 'dimmed');
-    card.style.display = 'none';
-  });
-
-  dayCards.forEach((card, index) => {
-    const dayNum = DAYS[index];
-
-    if (TEST_MODE) {
-      // 🧪 Test mode: all days available
-      if (dayNum < today) card.classList.add('dimmed');
-    } else {
-      // 🌍 Production: hide future days
-      if (!isFebruary || dayNum > today) return;
-      if (dayNum < today) card.classList.add('dimmed');
-    }
-
-    // Decide starting index
-    if (
-      (TEST_MODE && dayNum <= today) ||
-      (!TEST_MODE && dayNum === today)
-    ) {
-      activeIndex = index;
-    }
-  });
-
-  showDay(activeIndex);
-
-  // Hide test label in production
-  if (!TEST_MODE && testLabel) {
-    testLabel.style.display = 'none';
-  }
+/* ================= DAY ================= */
+function showDay(i) {
+  dayCards.forEach(d => d.style.display = 'none');
+  dayCards[i].style.display = 'flex';
+  activeIndex = i;
 }
 
-/* ================= SHOW ONE DAY ================= */
-function showDay(index) {
-  dayCards.forEach(card => {
-    card.classList.remove('active');
-    card.style.display = 'none';
-  });
-
-  dayCards[index].classList.add('active');
-  dayCards[index].style.display = 'flex';
-}
-
-/* ================= SWIPE ONLY ================= */
+/* ================= SWIPE ================= */
 let startX = 0;
-
-app.addEventListener('touchstart', e => {
-  startX = e.touches[0].clientX;
-});
-
+app.addEventListener('touchstart', e => startX = e.touches[0].clientX);
 app.addEventListener('touchend', e => {
-  const endX = e.changedTouches[0].clientX;
-  const diff = endX - startX;
-
+  const diff = e.changedTouches[0].clientX - startX;
   if (Math.abs(diff) < 50) return;
-
-  if (diff < 0) swipeNext();
-  else swipePrev();
+  diff < 0 ? next() : prev();
 });
 
-function swipeNext() {
-  if (activeIndex < dayCards.length - 1) {
-    activeIndex++;
-    showDay(activeIndex);
-  }
-}
-
-function swipePrev() {
-  if (activeIndex > 0) {
-    activeIndex--;
-    showDay(activeIndex);
-  }
-}
-
-/* ================= KEYBOARD NAV (DESKTOP) ================= */
-document.addEventListener('keydown', (e) => {
-  // Ignore keys while locked
+document.addEventListener('keydown', e => {
   if (lockScreen.style.display !== 'none') return;
-
-  if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
-    e.preventDefault();
-  }
-
-  if (e.key === 'ArrowRight') swipeNext();
-  if (e.key === 'ArrowLeft') swipePrev();
+  if (e.key === 'ArrowRight') next();
+  if (e.key === 'ArrowLeft') prev();
 });
 
+function next() { if (activeIndex < dayCards.length - 1) showDay(activeIndex + 1); }
+function prev() { if (activeIndex > 0) showDay(activeIndex - 1); }
 
+/* ================= LOVE SURPRISE ================= */
+function openLove() {
+  // 🧪 Test mode → always open
+  if (!TEST_MODE) {
+    const d = new Date();
+    if (d.getMonth() !== 1 || d.getDate() !== 14) {
+      alert("This surprise unlocks on Valentine's Day ❤️");
+      return;
+    }
+  }
+
+  document.getElementById('lovePopup').style.display = 'grid';
+  typeLoveText();
+}
+
+function closeLove() {
+  document.getElementById('lovePopup').style.display = 'none';
+  document.getElementById('loveText').innerHTML = '';
+}
+
+function typeLoveText() {
+  const text = `Loving you is the best decision of my life.
+No matter where life takes us,
+my heart will always choose you.
+
+எப்போதும்… உன்னோடு ❤️`;
+
+  const el = document.getElementById('loveText');
+  let i = 0;
+
+  const timer = setInterval(() => {
+    el.innerHTML += text.charAt(i++);
+    if (i >= text.length) clearInterval(timer);
+  }, 40);
+}
 </script>
 
 </body>
