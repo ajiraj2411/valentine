@@ -2,190 +2,283 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>7 Days of Valentine ❤️</title>
+<title>Ajith ❤️ Rohini</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- Handwritten font -->
 <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
 
 <style>
 body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(120deg, #ff5f6d, #ffc371);
+  background: radial-gradient(circle at top, #1a000a, #000);
   color: white;
   text-align: center;
+  overflow-x: hidden;
 }
 
-h1 {
-  margin-top: 30px;
-  font-size: 3rem;
+/* PASSWORD */
+#lockScreen {
+  position: fixed;
+  inset: 0;
+  background: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 3000;
+}
+.lock-box {
+  padding: 40px;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.05);
+  box-shadow: 0 0 30px rgba(255,0,80,0.4);
+}
+input {
+  padding: 12px;
+  border-radius: 25px;
+  border: none;
+  width: 220px;
+  text-align: center;
+}
+button {
+  margin-top: 15px;
+  padding: 12px 30px;
+  border-radius: 30px;
+  border: none;
+  background: crimson;
+  color: white;
+  cursor: pointer;
 }
 
+/* INTRO */
+#intro {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: black;
+  z-index: 2500;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-family: 'Pacifico', cursive;
+}
+@keyframes fadeIn { to { opacity: 1; } }
+
+/* DAYS */
 .day {
-  background: rgba(255,255,255,0.15);
-  margin: 25px auto;
-  padding: 25px;
+  background: rgba(255,255,255,0.08);
+  margin: 30px auto;
+  padding: 30px;
   border-radius: 20px;
   max-width: 750px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.25);
 }
+.locked { opacity: 0.3; filter: blur(3px); }
+.note { font-family: 'Pacifico', cursive; font-size: 1.2rem; }
 
-.locked {
-  opacity: 0.4;
-  filter: blur(2px);
-}
-
-.note {
-  font-family: 'Pacifico', cursive;
-  font-size: 1.2rem;
-  margin-top: 15px;
-}
-
-img {
+/* KEN BURNS */
+.photo { overflow: hidden; border-radius: 15px; }
+.photo img {
   width: 100%;
-  max-width: 300px;
+  max-width: 320px;
+  animation: kenburns 18s infinite;
+}
+@keyframes kenburns {
+  from { transform: scale(1); }
+  to { transform: scale(1.15); }
+}
+
+/* GALLERY */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 15px;
+}
+.gallery img {
+  width: 100%;
   border-radius: 15px;
-  margin-top: 15px;
+  animation: kenburns 20s infinite;
 }
 
-button {
-  background: #ff2e63;
-  border: none;
-  padding: 15px 25px;
-  border-radius: 30px;
-  color: white;
-  font-size: 1rem;
-  cursor: pointer;
-  margin-top: 20px;
-}
-
-button:hover {
-  background: #ff1744;
-}
-
+/* POPUP */
 .popup {
   display: none;
   position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0,0,0,0.7);
-  align-items: center;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  z-index: 4000;
   justify-content: center;
+  align-items: center;
 }
-
 .popup-content {
   background: white;
-  color: #333;
+  color: #111;
   padding: 30px;
   border-radius: 20px;
-  max-width: 400px;
+  max-width: 420px;
   font-family: 'Pacifico', cursive;
+  position: relative;
 }
 
-footer {
-  margin: 40px 0 20px;
-  opacity: 0.8;
+/* FLOATING HEARTS */
+.floating-heart {
+  position: absolute;
+  bottom: -10px;
+  font-size: 18px;
+  animation: floatUp 6s linear infinite;
 }
+@keyframes floatUp {
+  to { transform: translateY(-110vh); opacity: 0; }
+}
+
+/* HEART CONFETTI */
+.heart {
+  position: fixed;
+  top: -10px;
+  font-size: 18px;
+  animation: fallHeart linear forwards;
+  z-index: 5000;
+}
+@keyframes fallHeart {
+  to { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+}
+
+/* TYPEWRITER */
+.typewriter span {
+  opacity: 0;
+  animation: showText 0.5s forwards;
+}
+@keyframes showText { to { opacity: 1; } }
 </style>
 </head>
 
 <body>
 
-<h1>7 Days of Valentine 💕</h1>
-<p>One surprise unlocked every day…</p>
-
-<!-- MUSIC -->
-<audio autoplay loop>
-  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-</audio>
-
-<div id="days">
-
-  <div class="day" data-day="7">
-    <h2>🌹 Rose Day</h2>
-    <img src="https://picsum.photos/300?1">
-    <p class="note">Like this rose, my love blooms endlessly for you.</p>
+<!-- PASSWORD -->
+<div id="lockScreen">
+  <div class="lock-box">
+    <h2>For Rohini ❤️</h2>
+    <input type="password" id="password">
+    <br>
+    <button onclick="unlock()">Open 💖</button>
   </div>
-
-  <div class="day" data-day="8">
-    <h2>💍 Propose Day</h2>
-    <img src="https://picsum.photos/300?2">
-    <p class="note">I choose you today, tomorrow, always.</p>
-  </div>
-
-  <div class="day" data-day="9">
-    <h2>🍫 Chocolate Day</h2>
-    <img src="https://picsum.photos/300?3">
-    <p class="note">Life with you is sweeter than chocolate.</p>
-  </div>
-
-  <div class="day" data-day="10">
-    <h2>🧸 Teddy Day</h2>
-    <img src="https://picsum.photos/300?4">
-    <p class="note">If you ever feel low, hug me tight.</p>
-  </div>
-
-  <div class="day" data-day="11">
-    <h2>🤞 Promise Day</h2>
-    <img src="https://picsum.photos/300?5">
-    <p class="note">I promise to stand beside you forever.</p>
-  </div>
-
-  <div class="day" data-day="12">
-    <h2>🤗 Hug Day</h2>
-    <img src="https://picsum.photos/300?6">
-    <p class="note">My arms are your safest place.</p>
-  </div>
-
-  <div class="day" data-day="13">
-    <h2>😘 Kiss Day</h2>
-    <img src="https://picsum.photos/300?7">
-    <p class="note">Every kiss says what words cannot.</p>
-  </div>
-
-  <div class="day" data-day="14">
-    <h2>❤️ Valentine’s Day</h2>
-    <img src="https://picsum.photos/300?8">
-    <p class="note">You are my forever Valentine.</p>
-    <button onclick="openLove()">🎁 Open Surprise</button>
-  </div>
-
 </div>
 
-<footer>
-Made with ❤️ only for you
-</footer>
+<!-- INTRO -->
+<div id="intro">
+  <h1 style="opacity:0; animation:fadeIn 2s forwards;">Every love story is beautiful…</h1>
+  <h2 style="opacity:0; animation:fadeIn 2s 2s forwards;">but ours is my favorite ❤️</h2>
+</div>
 
-<!-- LOVE LETTER POPUP -->
+<!-- AUDIO -->
+<audio id="bgMusic" loop>
+  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3">
+</audio>
+<audio id="chime">
+  <source src="https://assets.mixkit.co/sfx/preview/mixkit-bell-notification-933.mp3">
+</audio>
+
+<h1>Ajith ❤️ Rohini</h1>
+
+<!-- DAYS -->
+<div class="day" data-day="14">
+  <h2>❤️ Valentine’s Day</h2>
+  <div class="photo"><img src="valentine.jpg"></div>
+  <button onclick="openLove()">🎁 Open Surprise</button>
+</div>
+
+<!-- POPUP -->
 <div class="popup" id="lovePopup">
   <div class="popup-content">
-    <h2>My Love 💌</h2>
-    <p>
-      From the moment you entered my life,  
-      everything became brighter.  
-      I don’t need a special day to love you —  
-      but I’ll celebrate you every single one.
-    </p>
+    <h2>My Rohini 💌</h2>
+    <p id="letter" class="typewriter"></p>
     <button onclick="closeLove()">Close ❤️</button>
   </div>
 </div>
 
 <script>
-const today = new Date().getDate();
-document.querySelectorAll('.day').forEach(day => {
-  const unlock = day.getAttribute('data-day');
-  if (today < unlock) {
-    day.classList.add('locked');
-  }
-});
+const letterText = `Loving you is the best decision of my life.
+Every smile of yours completes me.
+No matter where life takes us,
+my heart will always choose you.
+
+எப்போதும்… உன்னோடு ❤️`;
+
+function typeWriter(text, el) {
+  el.innerHTML = '';
+  [...text].forEach((char, i) => {
+    const span = document.createElement('span');
+    span.textContent = char;
+    span.style.animationDelay = i * 0.05 + 's';
+    el.appendChild(span);
+  });
+}
+
+function unlock() {
+  const allowed = ['rohini', 'kannamma'];
+  const entered = password.value.trim().toLowerCase();
+  if (allowed.includes(entered)) {
+    lockScreen.style.display = 'none';
+    intro.style.display = 'flex';
+    bgMusic.play();
+    setTimeout(() => intro.style.display = 'none', 6000);
+  } else alert('Wrong password 💔');
+}
 
 function openLove() {
-  document.getElementById('lovePopup').style.display = 'flex';
+  const today = new Date();
+  if (today.getMonth() === 1 && today.getDate() === 14) launchHearts();
+  document.getElementById('chime').play();
+  lovePopup.style.display = 'flex';
+  typeWriter(letterText, document.getElementById('letter'));
+  floatingHearts();
 }
 
 function closeLove() {
-  document.getElementById('lovePopup').style.display = 'none';
+  lovePopup.style.display = 'none';
+}
+
+function launchHearts() {
+  const end = Date.now() + 10000;
+
+  // 🎨 Colors matched for romantic photos
+  const colors = [
+    '#ff1744', // deep rose
+    '#ff5fa2', // soft pink
+    '#ffc1cc', // blush
+    '#ffd700', // golden highlight
+    '#ffffff'  // white sparkle
+  ];
+
+  const interval = setInterval(() => {
+    for (let i = 0; i < 4; i++) {
+      const h = document.createElement('div');
+      h.className = 'heart';
+      h.innerHTML = '❤️';
+
+      h.style.left = Math.random() * 100 + 'vw';
+      h.style.color = colors[Math.floor(Math.random() * colors.length)];
+      h.style.fontSize = (Math.random() * 12 + 16) + 'px';
+      h.style.animationDuration = (Math.random() * 2 + 4) + 's';
+
+      document.body.appendChild(h);
+      setTimeout(() => h.remove(), 7000);
+    }
+
+    if (Date.now() > end) clearInterval(interval);
+  }, 250);
+}
+
+
+function floatingHearts() {
+  for (let i = 0; i < 15; i++) {
+    const h = document.createElement('div');
+    h.className = 'floating-heart';
+    h.innerHTML = '❤️';
+    h.style.left = Math.random() * 100 + 'vw';
+    h.style.animationDuration = (Math.random() * 3 + 4) + 's';
+    lovePopup.appendChild(h);
+    setTimeout(() => h.remove(), 6000);
+  }
 }
 </script>
 
