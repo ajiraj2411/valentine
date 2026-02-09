@@ -181,36 +181,6 @@ h2 { margin-bottom: 12px; }
 }
 
 /* ================= NAV ================= */
-.nav {
-  position: absolute;
-  bottom: 16px;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  padding: 0 18px;
-}
-
-.arrow {
-  font-size: 1.4rem;
-  cursor: pointer;
-}
-
-.dots {
-  position: absolute;
-  bottom: 8px;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  gap: 6px;
-}
-
-.dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.4);
-}
-
 .dot.active { background: white; }
 
 /* ================= POPUP ================= */
@@ -269,7 +239,7 @@ h2 { margin-bottom: 12px; }
 <div id="app">
 
 <!-- 🌹 Rose Day -->
-<div class="day dimmed">
+<div class="day">
   <h2>🌹 Rose Day</h2>
   <div class="photo"><img src="rose.jpg"></div>
   <p class="note">
@@ -279,7 +249,7 @@ h2 { margin-bottom: 12px; }
 </div>
 
 <!-- 💍 Propose Day -->
-<div class="day dimmed">
+<div class="day">
   <h2>💍 Propose Day</h2>
   <div class="photo"><img src="propose.jpg"></div>
   <p class="note">
@@ -289,7 +259,7 @@ h2 { margin-bottom: 12px; }
 </div>
 
 <!-- 🍫 Chocolate Day -->
-<div class="day active">
+<div class="day">
   <h2>🍫 Chocolate Day</h2>
   <div class="photo"><img src="chocolate.jpg"></div>
   <p class="note">
@@ -349,18 +319,6 @@ h2 { margin-bottom: 12px; }
   <button onclick="openLove()">🎁 Open Surprise</button>
 </div>
 
-
-  <div class="nav">
-    <div class="arrow">◀</div>
-    <div class="arrow">▶</div>
-  </div>
-
-  <div class="dots">
-    <div class="dot active"></div>
-    <div class="dot"></div>
-    <div class="dot"></div>
-  </div>
-
 </div>
 
 <audio id="bgMusic" loop>
@@ -368,92 +326,126 @@ h2 { margin-bottom: 12px; }
 </audio>
 
 <script>
+/* ================= CONFIG ================= */
 const TEST_MODE = true;
-const allowedPasswords = ['rohini','kannamma'];
+const allowedPasswords = ['rohini', 'kannamma'];
+const DAYS = [7, 8, 9, 10, 11, 12, 13, 14];
 
+/* ================= UNLOCK ================= */
 function unlock() {
   const v = password.value.trim().toLowerCase();
-  if (!allowedPasswords.includes(v)) return alert('Wrong password 💔');
+  if (!allowedPasswords.includes(v)) {
+    alert('Wrong password 💔');
+    return;
+  }
 
   lockScreen.style.display = 'none';
   intro.style.display = 'grid';
   bgMusic.play();
 
   setTimeout(() => intro.style.display = 'none', 6000);
+
+  initDays();
 }
 
-const DAYS = [7, 8, 9, 10, 11, 12, 13, 14];
-
-const todayDate = new Date();
-const today = todayDate.getDate();
-const isFebruary = todayDate.getMonth() === 1;
-
-const dayCards = document.querySelectorAll('.day');
-
+/* ================= DAY LOGIC ================= */
+const dayCards = Array.from(document.querySelectorAll('.day'));
 let activeIndex = 0;
 
-// Reset and apply visibility rules
-dayCards.forEach((card, index) => {
-  card.classList.remove('active', 'dimmed');
-  card.style.display = 'none';
+function initDays() {
+  const now = new Date();
+  const today = now.getDate();
+  const isFebruary = now.getMonth() === 1;
 
-  if (TEST_MODE) {
-    // 🧪 Test mode: show ALL days
-    card.style.display = 'flex';
+  // Reset
+  dayCards.forEach(card => {
+    card.classList.remove('active', 'dimmed');
+    card.style.display = 'none';
+  });
 
-    if (DAYS[index] < today) {
-      card.classList.add('dimmed');
+  dayCards.forEach((card, index) => {
+    const dayNum = DAYS[index];
+
+    if (TEST_MODE) {
+      // 🧪 Test mode: all days available
+      if (dayNum < today) card.classList.add('dimmed');
+    } else {
+      // 🌍 Production: hide future days
+      if (!isFebruary || dayNum > today) return;
+      if (dayNum < today) card.classList.add('dimmed');
     }
-  } else {
-    // 🌍 Production mode
-    if (isFebruary && DAYS[index] <= today) {
-      card.style.display = 'flex';
 
-      if (DAYS[index] < today) {
-        card.classList.add('dimmed');
-      }
+    // Decide starting index
+    if (
+      (TEST_MODE && dayNum <= today) ||
+      (!TEST_MODE && dayNum === today)
+    ) {
+      activeIndex = index;
     }
-  }
+  });
 
-  // Determine active day
-  if (
-    (TEST_MODE && DAYS[index] <= today) ||
-    (!TEST_MODE && DAYS[index] === today)
-  ) {
-    activeIndex = index;
+  showDay(activeIndex);
+
+  // Hide test label in production
+  if (!TEST_MODE && testLabel) {
+    testLabel.style.display = 'none';
   }
+}
+
+/* ================= SHOW ONE DAY ================= */
+function showDay(index) {
+  dayCards.forEach(card => {
+    card.classList.remove('active');
+    card.style.display = 'none';
+  });
+
+  dayCards[index].classList.add('active');
+  dayCards[index].style.display = 'flex';
+}
+
+/* ================= SWIPE ONLY ================= */
+let startX = 0;
+
+app.addEventListener('touchstart', e => {
+  startX = e.touches[0].clientX;
 });
 
-// Activate today
-dayCards[activeIndex].classList.add('active');
+app.addEventListener('touchend', e => {
+  const endX = e.changedTouches[0].clientX;
+  const diff = endX - startX;
 
-// Hide test label in production
-if (!TEST_MODE) {
-  const label = document.getElementById('testLabel');
-  if (label) label.style.display = 'none';
-}
+  if (Math.abs(diff) < 50) return;
 
+  if (diff < 0) swipeNext();
+  else swipePrev();
+});
 
-const arrows = document.querySelectorAll('.arrow');
-
-function showDay(index) {
-  dayCards.forEach(d => d.classList.remove('active'));
-  dayCards[index].classList.add('active');
-}
-
-arrows[0].onclick = () => {
-  if (activeIndex > 0) {
-    activeIndex--;
-    showDay(activeIndex);
-  }
-};
-
-arrows[1].onclick = () => {
+function swipeNext() {
   if (activeIndex < dayCards.length - 1) {
     activeIndex++;
     showDay(activeIndex);
   }
-};
+}
+
+function swipePrev() {
+  if (activeIndex > 0) {
+    activeIndex--;
+    showDay(activeIndex);
+  }
+}
+
+/* ================= KEYBOARD NAV (DESKTOP) ================= */
+document.addEventListener('keydown', (e) => {
+  // Ignore keys while locked
+  if (lockScreen.style.display !== 'none') return;
+
+  if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+    e.preventDefault();
+  }
+
+  if (e.key === 'ArrowRight') swipeNext();
+  if (e.key === 'ArrowLeft') swipePrev();
+});
 
 
 </script>
