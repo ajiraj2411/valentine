@@ -88,6 +88,13 @@ body {
 
 .day.active { display: flex; }
 
+.note {
+  font-family: 'Pacifico', cursive;
+  font-size: 1.05rem;
+  line-height: 1.5;
+}
+
+
 /* PHOTO */
 .photo {
   width: 100%;
@@ -255,27 +262,13 @@ body {
   </div>
 </div>
 
-<!-- 🎵 MUSIC -->
-<audio id="dayMusic" loop></audio>
 
 <script>
 const TEST_MODE = false;
 const allowedPasswords = ['rohini','kannamma'];
 
-const songs = [
-  "songs/newyear.mp3",
-  "songs/rose.mp3",
-  "songs/propose.mp3",
-  "songs/chocolate.mp3",
-  "songs/teddy.mp3",
-  "songs/promise.mp3",
-  "songs/hug.mp3",
-  "songs/kiss.mp3",
-  "songs/valentine.mp3"
-];
 
 const dayCards = document.querySelectorAll('.day');
-const dayMusic = document.getElementById('dayMusic');
 let activeIndex = 0;
 
 /* 🔓 UNLOCK */
@@ -324,12 +317,6 @@ function showDay(i) {
   dayCards.forEach(d => d.style.display = 'none');
   dayCards[i].style.display = 'flex';
   activeIndex = i;
-
-  if (songs[i]) {
-    dayMusic.src = songs[i];
-    dayMusic.volume = 0.4;
-    dayMusic.play().catch(()=>{});
-  }
 }
 
 /* ⬅️➡️ NAV */
