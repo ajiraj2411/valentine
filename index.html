@@ -8,7 +8,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
 
 <style>
-/* ================= BASE ================= */
 html, body {
   margin: 0;
   padding: 0;
@@ -28,7 +27,7 @@ body {
 
 :root { --frame-ratio: 4 / 5; }
 
-/* ================= LOCK SCREEN ================= */
+/* LOCK */
 #lockScreen {
   position: fixed;
   inset: 0;
@@ -43,7 +42,6 @@ body {
   padding: 36px 28px;
   border-radius: 22px;
   background: rgba(255,255,255,0.07);
-  box-shadow: 0 25px 60px rgba(0,0,0,0.65);
   text-align: center;
 }
 
@@ -63,22 +61,19 @@ button {
   border: none;
   background: crimson;
   color: white;
-  font-size: 1rem;
   cursor: pointer;
 }
 
-button:hover { background: #ff1744; }
-
-/* ================= INTRO ================= */
+/* INTRO */
 #intro {
   position: fixed;
   inset: 0;
   background: black;
-  z-index: 4000;
   display: none;
   place-items: center;
   text-align: center;
   font-family: 'Pacifico', cursive;
+  z-index: 4000;
 }
 
 .fade {
@@ -88,7 +83,7 @@ button:hover { background: #ff1744; }
 
 @keyframes fadeIn { to { opacity: 1; } }
 
-/* ================= APP ================= */
+/* APP */
 #app {
   width: min(92vw, 420px);
   height: min(92svh, 720px);
@@ -97,7 +92,7 @@ button:hover { background: #ff1744; }
   justify-content: center;
 }
 
-/* ================= DAY ================= */
+/* DAY CARD */
 .day {
   width: 100%;
   height: 100%;
@@ -111,9 +106,8 @@ button:hover { background: #ff1744; }
 }
 
 .day.active { display: flex; }
-.day.dimmed { opacity: 0.55; }
 
-/* ================= PHOTO ================= */
+/* PHOTO */
 .photo {
   width: 100%;
   aspect-ratio: var(--frame-ratio);
@@ -134,7 +128,7 @@ button:hover { background: #ff1744; }
   to { transform: scale(1.15); }
 }
 
-/* ================= POPUP ================= */
+/* POPUP */
 .popup {
   position: fixed;
   inset: 0;
@@ -158,7 +152,7 @@ button:hover { background: #ff1744; }
 
 <body>
 
-<!-- 🔐 LOCK -->
+<!-- LOCK -->
 <div id="lockScreen">
   <div class="lock-box">
     <h2>For Rohini ❤️</h2>
@@ -167,7 +161,7 @@ button:hover { background: #ff1744; }
   </div>
 </div>
 
-<!-- 🎬 INTRO -->
+<!-- INTRO -->
 <div id="intro">
   <div>
     <h1 class="fade">Every love story is beautiful…</h1>
@@ -175,8 +169,17 @@ button:hover { background: #ff1744; }
   </div>
 </div>
 
-<!-- 📖 STORY -->
+<!-- STORY -->
 <div id="app">
+
+  <!-- 🎆 New Year -->
+  <div class="day">
+    <h2>🎆 New Year</h2>
+    <p class="note">
+      A new year, same us ❤️<br><br>
+      More memories coming soon… ✨
+    </p>
+  </div>
 
   <!-- 🌹 Rose Day -->
   <div class="day">
@@ -248,7 +251,7 @@ button:hover { background: #ff1744; }
     </p>
   </div>
 
-  <!-- ❤️ Valentine’s Day -->
+  <!-- ❤️ Valentine -->
   <div class="day">
     <h2>❤️ Valentine’s Day</h2>
     <div class="photo"><img src="valentine.jpg"></div>
@@ -261,7 +264,7 @@ button:hover { background: #ff1744; }
 
 </div>
 
-<!-- 💌 LOVE POPUP -->
+<!-- LOVE POPUP -->
 <div class="popup" id="lovePopup">
   <div class="popup-content">
     <h2>My Rohini 💌</h2>
@@ -270,89 +273,90 @@ button:hover { background: #ff1744; }
   </div>
 </div>
 
-<audio id="bgMusic" loop>
-  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3">
-</audio>
-
 <script>
-/* ================= CONFIG ================= */
 const TEST_MODE = false;
-const allowedPasswords = ['rohini', 'kannamma'];
+const allowedPasswords = ['rohini','kannamma'];
 
 const dayCards = document.querySelectorAll('.day');
 let activeIndex = 0;
 
-/* ================= UNLOCK ================= */
 function unlock() {
-  const v = password.value.trim().toLowerCase();
-  if (!allowedPasswords.includes(v)) return alert('Wrong password 💔');
+  if (!allowedPasswords.includes(password.value.toLowerCase())) {
+    alert('Wrong password 💔');
+    return;
+  }
 
   lockScreen.style.display = 'none';
   intro.style.display = 'grid';
-  bgMusic.play();
 
   setTimeout(() => intro.style.display = 'none', 6000);
-  showDay(0);
+
+  if (TEST_MODE) showDay(0);
+  else showDay(dayCards.length - 1);
 }
 
-/* ================= DAY ================= */
+function allowedMaxIndex() {
+  if (TEST_MODE) return dayCards.length - 1;
+
+  const d = new Date();
+  if (d.getMonth() === 1 && d.getDate() >= 14) return dayCards.length - 1;
+
+  return dayCards.length - 1;
+}
+
 function showDay(i) {
   dayCards.forEach(d => d.style.display = 'none');
   dayCards[i].style.display = 'flex';
   activeIndex = i;
 }
 
-/* ================= SWIPE ================= */
+function next() {
+  if (activeIndex < allowedMaxIndex()) showDay(activeIndex + 1);
+}
+function prev() {
+  if (activeIndex > 0) showDay(activeIndex - 1);
+}
+
 let startX = 0;
 app.addEventListener('touchstart', e => startX = e.touches[0].clientX);
 app.addEventListener('touchend', e => {
   const diff = e.changedTouches[0].clientX - startX;
-  if (Math.abs(diff) < 50) return;
-  diff < 0 ? next() : prev();
+  if (Math.abs(diff) > 50) diff < 0 ? next() : prev();
 });
 
 document.addEventListener('keydown', e => {
-  if (lockScreen.style.display !== 'none') return;
   if (e.key === 'ArrowRight') next();
   if (e.key === 'ArrowLeft') prev();
 });
 
-function next() { if (activeIndex < dayCards.length - 1) showDay(activeIndex + 1); }
-function prev() { if (activeIndex > 0) showDay(activeIndex - 1); }
-
-/* ================= LOVE SURPRISE ================= */
 function openLove() {
-  // 🧪 Test mode → always open
   if (!TEST_MODE) {
     const d = new Date();
-    if (d.getMonth() !== 1 || d.getDate() !== 14) {
-      alert("This surprise unlocks on Valentine's Day ❤️");
+    if (!(d.getMonth() === 1 && d.getDate() === 14)) {
+      alert("Unlocks on Valentine's Day ❤️");
       return;
     }
   }
-
-  document.getElementById('lovePopup').style.display = 'grid';
+  lovePopup.style.display = 'grid';
   typeLoveText();
 }
 
 function closeLove() {
-  document.getElementById('lovePopup').style.display = 'none';
-  document.getElementById('loveText').innerHTML = '';
+  lovePopup.style.display = 'none';
+  loveText.innerHTML = '';
 }
 
 function typeLoveText() {
   const text = `Loving you is the best decision of my life.
+
 No matter where life takes us,
-my heart will always choose you.
+my heart will always choose you ❤️
 
-எப்போதும்… உன்னோடு ❤️`;
-
-  const el = document.getElementById('loveText');
+எப்போதும்… உன்னோடு`;
   let i = 0;
-
-  const timer = setInterval(() => {
-    el.innerHTML += text.charAt(i++);
-    if (i >= text.length) clearInterval(timer);
+  const t = setInterval(() => {
+    loveText.innerHTML += text.charAt(i++);
+    if (i >= text.length) clearInterval(t);
   }, 40);
 }
 </script>
