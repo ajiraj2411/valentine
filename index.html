@@ -273,15 +273,15 @@ document.addEventListener('visibilitychange', () => {
 
 
 const SONGS = [
-  "https://cdn.jsdelivr.net/gh/ajiraj2411/arr-instrumentals@v1.0/audio/hopeful_theme.m4a",
-  "https://cdn.jsdelivr.net/gh/ajiraj2411/arr-instrumentals@v1.0/audio/rose_melody.m4a",
-  "https://cdn.jsdelivr.net/gh/ajiraj2411/arr-instrumentals@v1.0/audio/proposal_theme.m4a",
-  "https://cdn.jsdelivr.net/gh/ajiraj2411/arr-instrumentals@v1.0/audio/sweet_melody.m4a",
-  "https://cdn.jsdelivr.net/gh/ajiraj2411/arr-instrumentals@v1.0/audio/comfort_theme.m4a",
-  "https://cdn.jsdelivr.net/gh/ajiraj2411/arr-instrumentals@v1.0/audio/promise_theme.m4a",
-  "https://cdn.jsdelivr.net/gh/ajiraj2411/arr-instrumentals@v1.0/audio/embrace_theme.m4a",
-  "https://cdn.jsdelivr.net/gh/ajiraj2411/arr-instrumentals@v1.0/audio/intimate_theme.m4a",
-  "https://cdn.jsdelivr.net/gh/ajiraj2411/arr-instrumentals@v1.0/audio/forever_theme.m4a"
+  "https://cdn.jsdelivr.net/gh/ajiraj2411/arr-instrumentals@v1.2/audio/hopeful_theme.m4a",
+  "https://cdn.jsdelivr.net/gh/ajiraj2411/arr-instrumentals@v1.2/audio/rose_melody.m4a",
+  "https://cdn.jsdelivr.net/gh/ajiraj2411/arr-instrumentals@v1.2/audio/proposal_theme.m4a",
+  "https://cdn.jsdelivr.net/gh/ajiraj2411/arr-instrumentals@v1.2/audio/sweet_melody.m4a",
+  "https://cdn.jsdelivr.net/gh/ajiraj2411/arr-instrumentals@v1.2/audio/comfort_theme.m4a",
+  "https://cdn.jsdelivr.net/gh/ajiraj2411/arr-instrumentals@v1.2/audio/promise_theme.m4a",
+  "https://cdn.jsdelivr.net/gh/ajiraj2411/arr-instrumentals@v1.2/audio/embrace_theme.m4a",
+  "https://cdn.jsdelivr.net/gh/ajiraj2411/arr-instrumentals@v1.2/audio/intimate_theme.m4a",
+  "https://cdn.jsdelivr.net/gh/ajiraj2411/arr-instrumentals@v1.2/audio/forever_theme.m4a"
 ];
 
 const allowedPasswords = ['rohini','kannamma'];
@@ -326,7 +326,7 @@ function playWithFallback(url){
   music.play().then(fadeInMusic).catch(()=>{
     // 🔁 fallback to Cloudflare R2
     music.src = url.replace(
-      'cdn.jsdelivr.net/gh/ajiraj2411/arr-instrumentals@v1.0',
+      'cdn.jsdelivr.net/gh/ajiraj2411/arr-instrumentals@v1.2',
       'https://pub-03b5cf544e6c429787aff3c20c9af041.r2.dev'
     );
     music.loop = true;
