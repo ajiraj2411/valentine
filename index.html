@@ -5,151 +5,154 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Ajith ❤️ Rohini</title>
 
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="preconnect" href="https://raw.githubusercontent.com">
+<link rel="preconnect" href="https://pub-03b5cf544e6c429787aff3c20c9af041.r2.dev">
+
 <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
 
 <style>
-html, body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
+html,body{margin:0;padding:0;width:100%;height:100%}
+body{
+  min-height:100svh;
+  background:radial-gradient(circle at top,#1a000a,#000);
+  color:white;
+  display:grid;
+  place-items:center;
+  overflow:hidden;
+  font-family:'Segoe UI',sans-serif
 }
-
-body {
-  min-height: 100svh;
-  background: radial-gradient(circle at top, #1a000a, #000);
-  color: white;
-  display: grid;
-  place-items: center;
-  overflow: hidden;
-  font-family: 'Segoe UI', sans-serif;
-}
-
-:root { --frame-ratio: 4 / 5; }
+:root{--frame-ratio:4/5}
 
 /* LOCK */
-#lockScreen {
-  position: fixed;
-  inset: 0;
-  background: black;
-  display: grid;
-  place-items: center;
-  z-index: 5000;
+#lockScreen{position:fixed;inset:0;background:black;display:grid;place-items:center;z-index:5000}
+.lock-box{width:min(90vw,320px);padding:36px 28px;border-radius:22px;background:rgba(255,255,255,.07);text-align:center}
+
+/* LOCK SUCCESS GLOW */
+.lock-success{
+  animation: unlockGlow 1.2s ease forwards;
 }
 
-.lock-box {
-  width: min(90vw, 320px);
-  padding: 36px 28px;
-  border-radius: 22px;
-  background: rgba(255,255,255,0.07);
-  text-align: center;
+@keyframes unlockGlow{
+  0%{ box-shadow:0 0 0 rgba(255,255,255,0); }
+  50%{ box-shadow:0 0 30px rgba(255,255,255,0.6); }
+  100%{ box-shadow:0 0 0 rgba(255,255,255,0); }
 }
 
 /* INTRO */
-#intro {
-  position: fixed;
-  inset: 0;
-  background: black;
-  display: none;
-  place-items: center;
-  text-align: center;
-  font-family: 'Pacifico', cursive;
-  z-index: 4000;
-}
-
-.fade {
-  opacity: 0;
-  animation: fadeIn 2s forwards;
-}
-
-@keyframes fadeIn { to { opacity: 1; } }
+#intro{position:fixed;inset:0;background:black;display:none;place-items:center;text-align:center;font-family:'Pacifico',cursive;z-index:4000}
+.fade{opacity:0;animation:fadeIn 2s forwards}
+@keyframes fadeIn{to{opacity:1}}
 
 /* APP */
-#app {
-  width: min(92vw, 420px);
-  height: min(92svh, 720px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+#app{width:min(92vw,420px);height:min(92svh,720px);display:flex;align-items:center;justify-content:center}
 
 /* DAY */
-.day {
-  width: 100%;
-  height: 100%;
-  background: rgba(255,255,255,0.08);
-  border-radius: 22px;
-  padding: 20px;
-  display: none;
-  flex-direction: column;
-  justify-content: center;
-  text-align: center;
-}
+.day{width:100%;height:100%;background:rgba(255,255,255,.08);border-radius:22px;padding:20px;display:none;flex-direction:column;justify-content:center;text-align:center}
+.day.active{display:flex}
 
-.day.active { display: flex; }
-
-.note {
-  font-family: 'Pacifico', cursive;
-  font-size: 1.05rem;
-  line-height: 1.5;
-}
-
+.note{font-family:'Pacifico',cursive;font-size:1.05rem;line-height:1.55}
 
 /* PHOTO */
-.photo {
-  width: 100%;
-  aspect-ratio: var(--frame-ratio);
-  overflow: hidden;
-  border-radius: 18px;
-  margin-bottom: 14px;
+.photo{width:100%;aspect-ratio:var(--frame-ratio);overflow:hidden;border-radius:18px;margin-bottom:14px}
+.photo img{width:100%;height:100%;object-fit:cover}
+
+/* ===== ANIMATIONS ===== */
+.glow{animation:glow 5s ease-in-out infinite}
+@keyframes glow{50%{box-shadow:0 0 25px rgba(255,255,255,.25)}}
+
+.float{animation:float 6s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-6px)}}
+
+.bounce{animation:bounce 4s ease-in-out infinite}
+@keyframes bounce{50%{transform:translateY(-4px)}}
+
+.breathe{animation:breathe 5s ease-in-out infinite}
+@keyframes breathe{50%{transform:scale(1.02)}}
+
+.shimmer{animation:shimmer 3s linear infinite}
+@keyframes shimmer{50%{opacity:.85}}
+
+.slow-heart{animation:heartbeat 2.5s ease-in-out infinite}
+.heartbeat{animation:heartbeat 1.4s ease-in-out infinite}
+@keyframes heartbeat{
+  0%{transform:scale(1)}
+  25%{transform:scale(1.05)}
+  40%{transform:scale(1)}
+  60%{transform:scale(1.03)}
+  100%{transform:scale(1)}
 }
 
-.photo img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  animation: kenburns 18s ease-in-out infinite;
+/* SIGNATURE */
+.signature {
+  margin-top: 18px;
+  font-size: 1.3rem;
+  opacity: 0;
+  animation: signatureFade 3s ease forwards;
 }
 
-@keyframes kenburns {
-  from { transform: scale(1); }
-  to { transform: scale(1.15); }
+@keyframes signatureFade {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
 }
+
+/* HEARTBEAT SLOWDOWN */
+.heartbeat-slowdown {
+  animation-duration: 2.8s !important;
+}
+
+
+/* Propose Ring */
+.ring::after{
+  content:'💍';
+  display:block;
+  font-size:2.3rem;
+  animation:ring 2s ease-in-out infinite
+}
+@keyframes ring{50%{transform:rotate(15deg) scale(1.15)}}
+
+/* CONFETTI */
+.confetti{position:fixed;top:-10px;font-size:20px;animation:fall linear forwards;z-index:7000}
+@keyframes fall{to{transform:translateY(110vh) rotate(360deg);opacity:0}}
 
 /* POPUP */
-.popup {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.85);
-  display: none;
-  place-items: center;
-  z-index: 6000;
+.popup{position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;place-items:center;z-index:6000}
+.popup-content{width:min(90vw,360px);padding:26px;border-radius:22px;background:white;color:#111;text-align:center;font-family:'Pacifico',cursive}
+
+/* VIGNETTE OVERLAY */
+.popup::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:radial-gradient(
+    circle at center,
+    rgba(0,0,0,0) 40%,
+    rgba(0,0,0,0.65) 100%
+  );
+  pointer-events:none;
 }
 
-.popup-content {
-  width: min(90vw, 360px);
-  padding: 26px;
-  border-radius: 22px;
-  background: white;
-  color: #111;
-  text-align: center;
-  font-family: 'Pacifico', cursive;
+/* DIM BACKGROUND WHEN POPUP OPEN */
+body.dimmed #app{
+  filter: blur(3px) brightness(0.6);
+  transition: filter 0.6s ease;
 }
+
 </style>
 </head>
 
 <body>
 
-<!-- 🔐 LOCK -->
+<!-- LOCK -->
 <div id="lockScreen">
   <div class="lock-box">
     <h2>For Rohini ❤️</h2>
-    <input type="password" id="password" placeholder="Secret word" />
+    <input id="password" type="password" placeholder="Nick Name" />
     <button onclick="unlock()">Open 💖</button>
   </div>
 </div>
 
-<!-- 🎬 INTRO -->
+<!-- INTRO -->
 <div id="intro">
   <div>
     <h1 class="fade">Every love story is beautiful…</h1>
@@ -157,103 +160,93 @@ body {
   </div>
 </div>
 
-<!-- 📖 STORY -->
+<!-- STORY -->
 <div id="app">
 
-  <!-- 🎆 New Year -->
-  <div class="day">
-    <h2>🎆 New Year</h2>
-    <p class="note">
-      A new year, the same hearts walking together.<br>
-      புதிய வருடம்… அதே காதல், அதே நாம்கள் ❤️<br><br>
-      More memories coming soon… ✨
-    </p>
-  </div>
+<div class="day glow">
+  <h2>🎆 New Year</h2>
+  <p class="note">
+    A new year, the same hearts walking together.<br>
+    புதிய வருடம்… அதே காதல், அதே இதயங்கள் ❤️
+  </p>
+</div>
 
-  <!-- 🌹 Rose Day -->
-  <div class="day">
-    <h2>🌹 Rose Day</h2>
-    <div class="photo"><img src="rose.jpg"></div>
-    <p class="note">
-      Just like a rose, my love for you grows more beautiful every day.<br>
-      இந்த ரோஜா போல, என் காதலும் தினம் தினம் மலர்கிறது 🌹
-    </p>
-  </div>
+<div class="day">
+  <h2>🌹 Rose Day</h2>
+  <div class="photo"><img src="rose.jpg"></div>
+  <p class="note">
+    Just like this rose, my love for you grows more beautiful every day.<br>
+    இந்த ரோஜாவைப் போல, என் காதல் நாள்தோறும் இன்னும் அழகாக மலர்கிறது 🌹
+  </p>
+</div>
 
-  <!-- 💍 Propose Day -->
-  <div class="day">
-    <h2>💍 Propose Day</h2>
-    <div class="photo"><img src="propose.jpg"></div>
-    <p class="note">
-      I may not propose every day, but my heart chooses you again and again.<br>
-      வார்த்தையில்லாமல் கூட, என் இதயம் தினமும் உன்னையே தேர்ந்தெடுக்கிறது 💍
-    </p>
-  </div>
+<div class="day ring">
+  <h2>💍 Propose Day</h2>
+  <div class="photo"><img src="propose.jpg"></div>
+  <p class="note">
+    I may not propose every day, but my heart chooses you again and again.<br>
+    ஒவ்வொரு நாளும், சொல்லாமல் கூட என் இதயம் உன்னையே தேர்ந்தெடுக்கிறது 💍
+  </p>
+</div>
 
-  <!-- 🍫 Chocolate Day -->
-  <div class="day">
-    <h2>🍫 Chocolate Day</h2>
-    <div class="photo"><img src="chocolate.jpg"></div>
-    <p class="note">
-      Life with you is sweeter than any chocolate in the world.<br>
-      உன்னோடு வாழ்க்கை… உலகின் எந்த இனிப்பையும் விட இனிமை 🍫
-    </p>
-  </div>
+<div class="day float">
+  <h2>🍫 Chocolate Day</h2>
+  <div class="photo"><img src="chocolate.jpg"></div>
+  <p class="note">
+    Life with you is sweeter than any chocolate in the world.<br>
+    உன்னோடு இருக்கும் ஒவ்வொரு நாளும், உலகின் எந்த இனிப்பையும் விட இனிமை 🍫
+  </p>
+</div>
 
-  <!-- 🧸 Teddy Day -->
-  <div class="day">
-    <h2>🧸 Teddy Day</h2>
-    <div class="photo"><img src="teddy.jpg"></div>
-    <p class="note">
-      If I could, I’d be your teddy — always there to comfort you.<br>
-      உன்னை தேற்ற, நான் எப்போதும் உன்னோடு இருக்கும் teddy தான் 🧸
-    </p>
-  </div>
+<div class="day bounce">
+  <h2>🧸 Teddy Day</h2>
+  <div class="photo"><img src="teddy.jpg"></div>
+  <p class="note">
+    If I could, I’d be your teddy — always there to comfort you.<br>
+    உன்னை தேற்ற, எப்போதும் உன்னோடு இருக்கும் teddy ஆகவே இருப்பேன் 🧸
+  </p>
+</div>
 
-  <!-- 🤞 Promise Day -->
-  <div class="day">
-    <h2>🤞 Promise Day</h2>
-    <div class="photo"><img src="promise.jpg"></div>
-    <p class="note">
-      I promise to stand by you, support you, and love you forever.<br>
-      உன்னோடு நிற்பதே என் உறுதி… என்றும் 🤞
-    </p>
-  </div>
+<div class="day slow-heart">
+  <h2>🤞 Promise Day</h2>
+  <div class="photo"><img src="promise.jpg"></div>
+  <p class="note">
+    I promise to stand by you, support you, and love you forever.<br>
+    உன்னோடு நிற்பதே என் உறுதி… என்றும் 🤞
+  </p>
+</div>
 
-  <!-- 🤗 Hug Day -->
-  <div class="day">
-    <h2>🤗 Hug Day</h2>
-    <div class="photo"><img src="hug.jpg"></div>
-    <p class="note">
-      Whenever life feels heavy, my arms are always open for you.<br>
-      உலகம் சுமையாக இருந்தாலும், என் கரங்கள் உனக்கே 🤍
-    </p>
-  </div>
+<div class="day breathe">
+  <h2>🤗 Hug Day</h2>
+  <div class="photo"><img src="hug.jpg"></div>
+  <p class="note">
+    Whenever life feels heavy, my arms are always open for you.<br>
+    உலகம் சுமையாக இருக்கும் எந்த தருணத்திலும், என் கரங்கள் உனக்கான அடைக்கலம் 🤍
+  </p>
+</div>
 
-  <!-- 😘 Kiss Day -->
-  <div class="day">
-    <h2>😘 Kiss Day</h2>
-    <div class="photo"><img src="kiss.jpg"></div>
-    <p class="note">
-      Every kiss is a reminder of how deeply I love you.<br>
-      ஒவ்வொரு முத்தமும்… என் காதலின் சாட்சி 😘
-    </p>
-  </div>
+<div class="day shimmer">
+  <h2>😘 Kiss Day</h2>
+  <div class="photo"><img src="kiss.jpg"></div>
+  <p class="note">
+    Every kiss is a reminder of how deeply I love you.<br>
+    ஒவ்வொரு முத்தமும், சொல்லாமல் பேசும் என் ஆழ்ந்த காதல் 😘
+  </p>
+</div>
 
-  <!-- ❤️ Valentine -->
-  <div class="day">
-    <h2>❤️ Valentine’s Day</h2>
-    <div class="photo"><img src="valentine.jpg"></div>
-    <p class="note">
-      You are my today, my tomorrow, and my forever.<br>
-      இன்று… நாளை… என்றும்… நீயே ❤️
-    </p>
-    <button onclick="openLove()">🎁 Open Surprise</button>
-  </div>
+<div class="day heartbeat">
+  <h2>❤️ Valentine’s Day</h2>
+  <div class="photo"><img src="valentine.jpg"></div>
+  <p class="note">
+    You are my today, my tomorrow, and my forever.<br>
+    இன்று… நாளை… என்றும்… நீயே ❤️
+  </p>
+  <button onclick="openLove()">🎁 Open Surprise</button>
+</div>
 
 </div>
 
-<!-- 💌 LOVE POPUP -->
+<!-- LOVE LETTER -->
 <div class="popup" id="lovePopup">
   <div class="popup-content">
     <h2>My Rohini 💌</h2>
@@ -262,149 +255,206 @@ body {
   </div>
 </div>
 
+<audio id="dayMusic" preload="metadata"></audio>
 
 <script>
-const TEST_MODE = false;
+
+const days=[...document.querySelectorAll('.day')];
+const music=document.getElementById('dayMusic');
+
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) {
+    music.pause();
+  } else if (music.src) {
+    music.play().catch(()=>{});
+  }
+});
+
+
+
+const SONGS = [
+  "https://cdn.jsdelivr.net/gh/ajiraj2411/arr-instrumentals@v1.0/audio/hopeful_theme.m4a",
+  "https://cdn.jsdelivr.net/gh/ajiraj2411/arr-instrumentals@v1.0/audio/rose_melody.m4a",
+  "https://cdn.jsdelivr.net/gh/ajiraj2411/arr-instrumentals@v1.0/audio/proposal_theme.m4a",
+  "https://cdn.jsdelivr.net/gh/ajiraj2411/arr-instrumentals@v1.0/audio/sweet_melody.m4a",
+  "https://cdn.jsdelivr.net/gh/ajiraj2411/arr-instrumentals@v1.0/audio/comfort_theme.m4a",
+  "https://cdn.jsdelivr.net/gh/ajiraj2411/arr-instrumentals@v1.0/audio/promise_theme.m4a",
+  "https://cdn.jsdelivr.net/gh/ajiraj2411/arr-instrumentals@v1.0/audio/embrace_theme.m4a",
+  "https://cdn.jsdelivr.net/gh/ajiraj2411/arr-instrumentals@v1.0/audio/intimate_theme.m4a",
+  "https://cdn.jsdelivr.net/gh/ajiraj2411/arr-instrumentals@v1.0/audio/forever_theme.m4a"
+];
+
 const allowedPasswords = ['rohini','kannamma'];
+let fading = false;   // ✅ NEW: fade guard
 
-
-const dayCards = document.querySelectorAll('.day');
-let activeIndex = 0;
-
-/* 🔓 UNLOCK */
-function unlock() {
-  if (!allowedPasswords.includes(password.value.toLowerCase())) {
+function unlock(){
+  if(!allowedPasswords.includes(password.value.toLowerCase())){
     alert('Wrong password 💔');
     return;
   }
+  document.querySelector('.lock-box').classList.add('lock-success');
+setTimeout(()=>{
+  lockScreen.style.display='none';
+}, 900);
 
-  lockScreen.style.display = 'none';
-  intro.style.display = 'grid';
-
-  setTimeout(() => intro.style.display = 'none', 6000);
-  showInitialDay();
+  intro.style.display='grid';
+  setTimeout(()=>intro.style.display='none',6000);
+  showDay(getTodayIndex());
 }
 
-/* 📅 PROD LOGIC */
-function showInitialDay() {
-  const d = new Date();
-  const month = d.getMonth(); // Jan = 0, Feb = 1
-  const today = d.getDate();
-
-  // 🧪 Test mode → everything
-  if (TEST_MODE) {
-    showDay(0);
-    return;
-  }
-
-  // 🎆 Jan 1 → Feb 6 → only New Year
-  if (month === 0 || (month === 1 && today < 7)) {
-    showDay(0);
-    return;
-  }
-
-  // 🌹 Feb 7 → Feb 13 → start from today's page
-  if (month === 1 && today >= 7 && today <= 13) {
-    showDay(today - 6); // Feb 7 → index 1
-    return;
-  }
-
-  // ❤️ Feb 14 → show Valentine
-  if (month === 1 && today === 14) {
-    showDay(8);
-    return;
-  }
-
-  // 🌸 Feb 15+ → relive from Rose Day
-  if (month === 1 && today > 14) {
-    showDay(1); // Rose Day
-    return;
-  }
-
-  showDay(0);
+function getTodayIndex(){
+  const d=new Date(),m=d.getMonth(),day=d.getDate();
+  if(m===0||(m===1&&day<7))return 0;
+  if(m===1&&day<=13)return day-6;
+  if(m===1&&day===14)return 8;
+  return 1;
 }
 
-/* 📖 SHOW DAY */
-function showDay(i) {
-  dayCards.forEach(d => d.style.display = 'none');
-  dayCards[i].style.display = 'flex';
-  activeIndex = i;
+function showDay(i){
+  days.forEach(d=>d.style.display='none');
+  days[i].style.display='flex';
+  playWithFallback(SONGS[i]);
+  startConfetti(i);
 }
 
-/* ⬅️➡️ NAV */
-function next() {
-  const d = new Date();
-  const month = d.getMonth();
-  const today = d.getDate();
+function playWithFallback(url){
+  music.pause();
+  music.src = url;
+  music.loop = true;
+  music.currentTime = 0;
+  music.volume = 0;
+  music.play().then(fadeInMusic).catch(()=>{
+    // 🔁 fallback to Cloudflare R2
+    music.src = url.replace(
+      'cdn.jsdelivr.net/gh/ajiraj2411/arr-instrumentals@v1.0',
+      'https://pub-03b5cf544e6c429787aff3c20c9af041.r2.dev'
+    );
+    music.loop = true;
+    music.play().then(fadeInMusic).catch(()=>{});
+  });
+}
 
-  // 🧪 Test mode → free navigation
-  if (TEST_MODE) {
-    if (activeIndex < dayCards.length - 1) showDay(activeIndex + 1);
-    return;
-  }
+function fadeInMusic(){
+  if(fading) return;     // ✅ NEW: prevent overlap
+  fading = true;
+  let v = 0;
+  const t = setInterval(()=>{
+    v += 0.02;
+    music.volume = Math.min(v, 0.4);
+    if(v >= 0.4){
+      clearInterval(t);
+      fading = false;
+    }
+  },150);
+}
 
-  // 🎆 Jan or before Feb 7 → lock
-  if (month === 0 || (month === 1 && today < 7)) return;
+function fadeOutMusic(duration = 5000){
+  const steps = 50;
+  const stepTime = duration / steps;
+  const startVol = music.volume;
+  let i = 0;
 
-  // 🌹 Feb 7–13 → lock future
-  if (month === 1 && today >= 7 && today < 14) {
-    const maxIndex = today - 6;
-    if (activeIndex + 1 > maxIndex) return;
-  }
+  const t = setInterval(()=>{
+    i++;
+    music.volume = Math.max(0, startVol * (1 - i / steps));
+    if(i >= steps){
+      clearInterval(t);
+      music.pause();
+    }
+  }, stepTime);
+}
 
-  // ❤️ Feb 14+ → full access
-  if (activeIndex < dayCards.length - 1) {
-    showDay(activeIndex + 1);
+function slowHeartbeat(){
+  const valentine = document.querySelector('.day.heartbeat');
+  if(valentine){
+    valentine.classList.add('heartbeat-slowdown');
   }
 }
 
-function prev() {
-  if (activeIndex > 0) showDay(activeIndex - 1);
+
+function startConfetti(i){
+  const strong=i===8;
+  const end=Date.now()+(strong?10000:3000);
+  const icons=['✨','🌹','💍','🍫','🧸','🤍','🤗','💋','❤️'];
+  const timer=setInterval(()=>{
+    if(Date.now()>end){clearInterval(timer);return;}
+    const c=document.createElement('div');
+    c.className='confetti';
+    c.textContent=icons[i];
+    c.style.left=Math.random()*100+'vw';
+    c.style.animationDuration=strong?'5s':'3s';
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),6000);
+  },150);
 }
 
-let startX = 0;
-app.addEventListener('touchstart', e => startX = e.touches[0].clientX);
-app.addEventListener('touchend', e => {
-  const diff = e.changedTouches[0].clientX - startX;
-  if (Math.abs(diff) > 50) diff < 0 ? next() : prev();
-});
-
-document.addEventListener('keydown', e => {
-  if (e.key === 'ArrowRight') next();
-  if (e.key === 'ArrowLeft') prev();
-});
-
-/* 💌 LOVE */
-function openLove() {
-  const d = new Date();
-  if (!TEST_MODE && !(d.getMonth() === 1 && d.getDate() === 14)) {
-    alert("Unlocks on Valentine's Day ❤️");
-    return;
-  }
-  lovePopup.style.display = 'grid';
-  typeLoveText();
-}
-
-function closeLove() {
-  lovePopup.style.display = 'none';
+function openLove(){
+  document.body.classList.add('dimmed');
+  lovePopup.style.display='grid';
   loveText.innerHTML = '';
-}
 
-function typeLoveText() {
-  const text = `Loving you is the best decision of my life.
-Every smile of yours completes me.
+  const text = `My Love,
 
-No matter where life takes us,
-my heart will always find its way back to you.
+Loving you is the best decision I have ever made.
+In a world full of chaos, your smile is where my heart finds peace.
+Every time you smile, something in me feels complete—like I’m exactly where I’m meant to be.
+
+Life may take us through many paths, some easy, some hard.
+But no matter where we go or how far the road stretches,
+my heart will always know its way back to you.
+Because you are my home.
+
+Today, tomorrow, and every day after—
+I choose you.
+I choose us.
+Again and again.
 
 Always…
-with you ❤️`;
+with you ❤️
+
+என்றும்… உன்னோடு தான் ❤️`;
 
   let i = 0;
-  const t = setInterval(() => {
-    loveText.innerHTML += text.charAt(i++);
-    if (i >= text.length) clearInterval(t);
+
+  const t = setInterval(()=>{
+    loveText.innerHTML += text.charAt(i++).replace('\n','<br>');
+
+    // slow typing for final emotional lines
+    if(i > text.length - 80){
+      clearInterval(t);
+      const slow = setInterval(()=>{
+        loveText.innerHTML += text.charAt(i++).replace('\n','<br>');
+        if(i >= text.length){
+          clearInterval(slow);
+          onLetterComplete();   // 🔥 trigger finale
+        }
+      }, 80);
+    }
+
+    if(i >= text.length) clearInterval(t);
   }, 40);
+}
+
+function onLetterComplete(){
+  // 🎵 Fade out music slowly
+  fadeOutMusic(6000);
+
+  // ❤️ Slow heartbeat
+  slowHeartbeat();
+
+  // ✨ Signature
+  const sig = document.createElement('div');
+  sig.className = 'signature';
+  sig.innerHTML = '— Ajith ❤️ Rohini';
+  loveText.appendChild(sig);
+}
+
+
+function closeLove(){
+  lovePopup.style.display='none';
+  loveText.innerHTML='';
+  document.body.classList.remove('dimmed');
+  music.pause();        // ✅ NEW: stop music on close
 }
 </script>
 
